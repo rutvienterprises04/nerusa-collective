@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -17,10 +18,10 @@ export default function AdminLoginPage() {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ username, password }),
       });
       if (!res.ok) {
-        setError("Incorrect password");
+        setError("Incorrect username or password");
         return;
       }
       router.push("/admin");
@@ -35,9 +36,18 @@ export default function AdminLoginPage() {
       <h1 className="text-xl font-bold mb-6 text-center">Admin Login</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input
-          type="password"
+          type="text"
+          autoComplete="username"
           className="input"
-          placeholder="Admin password"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          autoComplete="current-password"
+          className="input"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

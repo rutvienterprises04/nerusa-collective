@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isCorrectAdminPassword, ADMIN_COOKIE_NAME } from "@/lib/adminAuth";
+import { isCorrectAdminCredentials, ADMIN_COOKIE_NAME } from "@/lib/adminAuth";
 
 export async function POST(req: NextRequest) {
-  const { password } = await req.json().catch(() => ({ password: "" }));
+  const { username, password } = await req.json().catch(() => ({ username: "", password: "" }));
 
-  if (!isCorrectAdminPassword(password ?? "")) {
-    return NextResponse.json({ error: "Incorrect password" }, { status: 401 });
+  if (!isCorrectAdminCredentials(username ?? "", password ?? "")) {
+    return NextResponse.json({ error: "Incorrect username or password" }, { status: 401 });
   }
 
   const res = NextResponse.json({ ok: true });

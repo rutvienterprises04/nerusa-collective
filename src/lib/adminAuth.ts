@@ -7,8 +7,11 @@ export async function isAdminAuthed(): Promise<boolean> {
   return store.get(COOKIE_NAME)?.value === "1";
 }
 
-export function isCorrectAdminPassword(password: string): boolean {
-  return !!process.env.ADMIN_PASSWORD && password === process.env.ADMIN_PASSWORD;
+export function isCorrectAdminCredentials(username: string, password: string): boolean {
+  const expectedUsername = process.env.ADMIN_USERNAME;
+  const expectedPassword = process.env.ADMIN_PASSWORD;
+  if (!expectedUsername || !expectedPassword) return false;
+  return username === expectedUsername && password === expectedPassword;
 }
 
 export const ADMIN_COOKIE_NAME = COOKIE_NAME;
