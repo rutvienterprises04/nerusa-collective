@@ -7,7 +7,9 @@ create table if not exists products (
   name text not null,
   description text,
   price_paise bigint not null,          -- store money in paise (INR) to avoid float issues
-  image_url text,
+  moq int not null default 1,           -- minimum order quantity
+  image_url text,                        -- enhanced + watermarked photo shown to customers
+  original_image_url text,               -- the raw photo as uploaded, kept for re-processing later
   stock_qty int not null default 0,
   is_active boolean not null default true,
   created_at timestamptz not null default now()
@@ -132,3 +134,9 @@ alter table delivery_stats_by_pincode enable row level security;
 
 create policy "Public can view active products" on products
   for select using (is_active = true);
+
+-- ============== MIGRATION (safe to re-run) ==============
+-- If you ran an earlier version of this schema before the "moq" /
+-- "original_image_url" columns existed, this brings it up to date.
+alter table products add column if not exists moq int not null default 1;
+alter table products add column if not exists original_image_url text;

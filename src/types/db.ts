@@ -34,7 +34,9 @@ export interface Product {
   name: string;
   description: string | null;
   price_paise: number;
+  moq: number;
   image_url: string | null;
+  original_image_url: string | null;
   stock_qty: number;
   is_active: boolean;
   created_at: string;

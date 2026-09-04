@@ -59,11 +59,20 @@ npm run dev
 ```
 Visit http://localhost:3000
 
-### 4. Add your first products
-Go to http://localhost:3000/admin/login, sign in with `ADMIN_PASSWORD`, then
-**Manage products** to add items with photos (paste an image URL — e.g. upload to
-[Supabase Storage](https://supabase.com/docs/guides/storage) or any image host and paste the
-link).
+### 4. Set up photo uploads (one-time)
+Product photos are uploaded straight from the admin panel — no separate image host needed.
+1. In Supabase: **Storage → New bucket** → name it exactly `product-images` → toggle **Public**
+   bucket → Create.
+2. That's it. The admin upload endpoint (`src/app/api/admin/products/upload-photo/route.ts`)
+   stores both the original and the auto-enhanced/watermarked photo there.
+
+### 5. Add your first products
+Go to **http://localhost:3000/admin/login**, sign in with `ADMIN_PASSWORD`, then
+**Manage products** (**http://localhost:3000/admin/products**) to add items:
+- Upload the plain product photo — it's automatically cropped square, white-balanced,
+  lightly sharpened, given a soft vignette, and stamped with your brand watermark
+  (see "Product photos" below for how to go further with an AI-styled backdrop later)
+- Enter price, MOQ (minimum order quantity), and stock quantity
 
 ## Payment flow today (Phase 1 — static UPI)
 
@@ -77,6 +86,19 @@ link).
 component's manual QR+reference flow for the Razorpay Checkout/Orders API, which auto-verifies
 payment via webhook instead of a human checking a UTR. Everything downstream (order status,
 Shiprocket, tracking) stays the same.
+
+## Product photos — free polish now, AI backdrop later
+
+Uploading a photo in `/admin/products` runs it through `src/lib/imageProcessing.ts`:
+square crop, auto white-balance/contrast, subtle saturation lift, sharpening, soft vignette,
+and a "Nerusa Collective" watermark in the corner — all done locally with the `sharp` library,
+no API cost.
+
+When you're ready to pay for a fancier AI-generated backdrop (product placed on styled
+marble/silk/soft-light scenes), open `applyLuxuryBackdrop()` in that same file and swap the
+no-op body for a call to an image-editing API (e.g. a provider like Photoroom/Pebblely, or an
+Anthropic/OpenAI image-editing endpoint once you pick one). Nothing else changes — the
+upload route, storage, and catalog display all stay the same.
 
 ## Connecting Shiprocket (when ready)
 

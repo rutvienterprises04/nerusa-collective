@@ -39,6 +39,7 @@ export default async function AdminProductsPage() {
                 <tr className="text-xs uppercase text-slate-400 border-b border-rose-100">
                   <th className="py-2 pr-4">Name</th>
                   <th className="py-2 pr-4">Price</th>
+                  <th className="py-2 pr-4">MOQ</th>
                   <th className="py-2 pr-4">Stock</th>
                   <th className="py-2 pr-4">Status</th>
                   <th className="py-2 pr-4"></th>

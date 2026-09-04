@@ -101,6 +101,12 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+    if (item.quantity < product.moq) {
+      return NextResponse.json(
+        { error: `"${product.name}" has a minimum order quantity of ${product.moq}` },
+        { status: 400 }
+      );
+    }
   }
 
   const orderItems = items.map((item) => {

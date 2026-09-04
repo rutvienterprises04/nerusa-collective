@@ -7,7 +7,9 @@ const schema = z.object({
   name: z.string().min(2),
   description: z.string().optional().or(z.literal("")),
   price_rupees: z.number().positive(),
+  moq: z.number().int().positive().default(1),
   image_url: z.string().url().optional().or(z.literal("")),
+  original_image_url: z.string().url().optional().or(z.literal("")),
   stock_qty: z.number().int().min(0),
 });
 
@@ -27,7 +29,9 @@ export async function POST(req: NextRequest) {
     name: parsed.data.name,
     description: parsed.data.description || null,
     price_paise: Math.round(parsed.data.price_rupees * 100),
+    moq: parsed.data.moq,
     image_url: parsed.data.image_url || null,
+    original_image_url: parsed.data.original_image_url || null,
     stock_qty: parsed.data.stock_qty,
     is_active: true,
   });

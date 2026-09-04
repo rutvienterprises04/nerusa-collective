@@ -29,17 +29,23 @@ export default function ProductCard({ product }: { product: Product }) {
         {product.description && (
           <p className="text-sm text-slate-500 line-clamp-2">{product.description}</p>
         )}
+        {product.moq > 1 && (
+          <p className="text-xs text-slate-400">Min. order qty: {product.moq}</p>
+        )}
         <div className="mt-auto flex items-center justify-between pt-2">
           <span className="font-bold text-rose-600">{formatRupees(product.price_paise)}</span>
           <button
             disabled={outOfStock}
             onClick={() => {
-              addItem({
-                product_id: product.id,
-                name: product.name,
-                unit_price_paise: product.price_paise,
-                image_url: product.image_url,
-              });
+              addItem(
+                {
+                  product_id: product.id,
+                  name: product.name,
+                  unit_price_paise: product.price_paise,
+                  image_url: product.image_url,
+                },
+                Math.max(1, product.moq)
+              );
               setAdded(true);
               setTimeout(() => setAdded(false), 1200);
             }}

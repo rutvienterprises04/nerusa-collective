@@ -27,6 +27,7 @@ export default function AdminProductRow({ product }: { product: Product }) {
     <tr className="border-b border-rose-50">
       <td className="py-2 pr-4">{product.name}</td>
       <td className="py-2 pr-4">{formatRupees(product.price_paise)}</td>
+      <td className="py-2 pr-4">{product.moq}</td>
       <td className="py-2 pr-4">{product.stock_qty}</td>
       <td className="py-2 pr-4">
         <span
