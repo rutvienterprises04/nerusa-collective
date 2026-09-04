@@ -1,6 +1,6 @@
-// Brand name built around the owner's first name (Neha) — personal-name
-// brands carry the lowest collision/trademark risk of the options tried.
-// Still worth a quick domain + IP India trademark search before printing
-// packaging (see chat for the link) since this wasn't formally verified.
-export const SITE_NAME = "Neha's Gift Box";
+// Brand name: "Nerusa" blends the owner's family names (Neha, Rutvi, Sandeep);
+// "Collective" adds the boutique/high-end feel requested. Invented word, so
+// collision risk is low, but still worth a quick domain + IP India trademark
+// search before printing packaging — that wasn't formally verified here.
+export const SITE_NAME = "Nerusa Collective";
 export const SITE_TAGLINE = "Return gifts & party favors for birthdays and every celebration";

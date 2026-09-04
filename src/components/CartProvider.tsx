@@ -14,7 +14,7 @@ interface CartContextValue {
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "nehasgiftbox_cart_v1";
+const STORAGE_KEY = "nerusa_cart_v1";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);

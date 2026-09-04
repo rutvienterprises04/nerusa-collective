@@ -53,7 +53,7 @@ function TrackForm() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-8">
         <input
           className="input"
-          placeholder="Order number (e.g. NGB-20260904-1234)"
+          placeholder="Order number (e.g. NRC-20260904-1234)"
           value={orderNumber}
           onChange={(e) => setOrderNumber(e.target.value)}
         />

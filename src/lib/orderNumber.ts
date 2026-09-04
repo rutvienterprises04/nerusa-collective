@@ -4,5 +4,5 @@ export function generateOrderNumber(): string {
   const m = String(date.getMonth() + 1).padStart(2, "0");
   const d = String(date.getDate()).padStart(2, "0");
   const rand = Math.floor(1000 + Math.random() * 9000);
-  return `NGB-${y}${m}${d}-${rand}`;
+  return `NRC-${y}${m}${d}-${rand}`;
 }
