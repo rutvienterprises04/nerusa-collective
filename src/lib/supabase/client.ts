@@ -1,0 +1,16 @@
+import { createClient } from "@supabase/supabase-js";
+
+// Browser-safe client. Only ever touches tables/policies that allow
+// anonymous read access (see supabase/schema.sql RLS policies).
+export function createBrowserSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!url || !anonKey) {
+    throw new Error(
+      "Missing NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY. Copy .env.local.example to .env.local and fill them in."
+    );
+  }
+
+  return createClient(url, anonKey);
+}
