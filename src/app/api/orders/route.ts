@@ -158,5 +158,9 @@ export async function POST(req: NextRequest) {
       .eq("id", product.id);
   }
 
-  return NextResponse.json({ order_number: order.order_number, order_id: order.id });
+  return NextResponse.json({
+    order_number: order.order_number,
+    order_id: order.id,
+    total_paise: order.total_paise,
+  });
 }

@@ -30,7 +30,9 @@ export default function CheckoutPage() {
   const [etaLoading, setEtaLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [placedOrder, setPlacedOrder] = useState<{ id: string; number: string } | null>(null);
+  const [placedOrder, setPlacedOrder] = useState<{ id: string; number: string; totalPaise: number } | null>(
+    null
+  );
 
   useEffect(() => {
     if (!/^\d{6}$/.test(form.pincode)) {
@@ -82,7 +84,7 @@ export default function CheckoutPage() {
         setError(data.error ?? "Something went wrong placing your order");
         return;
       }
-      setPlacedOrder({ id: data.order_id, number: data.order_number });
+      setPlacedOrder({ id: data.order_id, number: data.order_number, totalPaise: data.total_paise });
       clear();
     } catch {
       setError("Network error — please try again");
@@ -99,7 +101,11 @@ export default function CheckoutPage() {
           Order <span className="font-mono font-medium">{placedOrder.number}</span> — complete
           payment below to confirm it.
         </p>
-        <UpiPayment orderId={placedOrder.id} orderNumber={placedOrder.number} amountPaise={subtotalPaise} />
+        <UpiPayment
+          orderId={placedOrder.id}
+          orderNumber={placedOrder.number}
+          amountPaise={placedOrder.totalPaise}
+        />
         <div className="mt-6 flex gap-3">
           <a
             href={`/track?order=${placedOrder.number}`}
